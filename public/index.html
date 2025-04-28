@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>SSE 测试</h1>
+  <div id="messages"></div>
+  <script>
+    const source = new EventSource('/sse');
+    
+    source.addEventListener('message', (e) => {
+      const data = JSON.parse(e.data);
+      document.getElementById('messages').innerHTML += `
+        <p>${data.time}: ${data.message}</p>
+      `;
+    });
+
+    source.addEventListener('status', (e) => {
+      console.log('连接状态:', JSON.parse(e.data));
+    });
+  </script>
+</body>
+</html>
